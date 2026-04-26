@@ -1,0 +1,18 @@
+
+# Swift Package Manager
+.build/
+Package.resolved
+
+# Xcode
+*.xcodeproj/
+*.xcworkspace/
+*.pbxuser
+!*.pbxproj
+*.xcuserdata
+
+# macOS
+.DS_Store
+
+# Built app bundle
+*.app/
+
