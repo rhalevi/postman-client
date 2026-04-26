@@ -1,0 +1,81 @@
+client:
+  name: basic
+  file-system: device-agnostic
+tools: {}
+targets:
+  "PackageStructure": ["<PackageStructure>"]
+  "PostmanClient-arm64-apple-macosx-debug.exe": ["<PostmanClient-arm64-apple-macosx-debug.exe>"]
+  "PostmanClient-arm64-apple-macosx-debug.module": ["<PostmanClient-arm64-apple-macosx-debug.module>"]
+  "main": ["<PostmanClient-arm64-apple-macosx-debug.exe>","<PostmanClient-arm64-apple-macosx-debug.module>"]
+  "test": ["<PostmanClient-arm64-apple-macosx-debug.exe>","<PostmanClient-arm64-apple-macosx-debug.module>"]
+default: "main"
+nodes:
+  "/Users/reem/postman/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+  "/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient":
+    is-mutated: true
+commands:
+  "/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient-entitlement.plist":
+    tool: write-auxiliary-file
+    inputs: ["<entitlement-plist>","<com.apple.security.get-task-allow>"]
+    outputs: ["/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient-entitlement.plist"]
+    description: "Write auxiliary file /Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient-entitlement.plist"
+
+  "/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/reem/postman/ContentView.swift","/Users/reem/postman/ContentViewViewModel.swift","/Users/reem/postman/PostmanClientApp.swift"]
+    outputs: ["/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.build/sources"]
+    description: "Write auxiliary file /Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.build/sources"
+
+  "/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.product/Objects.LinkFileList":
+    tool: write-auxiliary-file
+    inputs: ["<link-file-list>","/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.build/ContentView.swift.o","/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.build/ContentViewViewModel.swift.o","/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.build/PostmanClientApp.swift.o"]
+    outputs: ["/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.product/Objects.LinkFileList"]
+    description: "Write auxiliary file /Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.product/Objects.LinkFileList"
+
+  "/Users/reem/postman/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt":
+    tool: write-auxiliary-file
+    inputs: ["<swift-get-version>","/Library/Developer/CommandLineTools/usr/bin/swiftc"]
+    outputs: ["/Users/reem/postman/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt"]
+    always-out-of-date: "true"
+    description: "Write auxiliary file /Users/reem/postman/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt"
+
+  "<PostmanClient-arm64-apple-macosx-debug.exe>":
+    tool: phony
+    inputs: ["<PostmanClient-arm64-apple-macosx-debug.exe-CodeSigning>"]
+    outputs: ["<PostmanClient-arm64-apple-macosx-debug.exe>"]
+
+  "<PostmanClient-arm64-apple-macosx-debug.module>":
+    tool: phony
+    inputs: ["/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.build/ContentView.swift.o","/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.build/ContentViewViewModel.swift.o","/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.build/PostmanClientApp.swift.o","/Users/reem/postman/.build/arm64-apple-macosx/debug/Modules/PostmanClient.swiftmodule"]
+    outputs: ["<PostmanClient-arm64-apple-macosx-debug.module>"]
+
+  "C.PostmanClient-arm64-apple-macosx-debug.exe":
+    tool: shell
+    inputs: ["/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.build/ContentView.swift.o","/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.build/ContentViewViewModel.swift.o","/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.build/PostmanClientApp.swift.o","/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.product/Objects.LinkFileList"]
+    outputs: ["/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient"]
+    description: "Linking ./.build/arm64-apple-macosx/debug/PostmanClient"
+    args: ["/Library/Developer/CommandLineTools/usr/bin/swiftc","-L","/Users/reem/postman/.build/arm64-apple-macosx/debug","-o","/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient","-module-name","PostmanClient","-Xlinker","-no_warn_duplicate_libraries","-emit-executable","-Xlinker","-alias","-Xlinker","_PostmanClient_main","-Xlinker","_main","-Xlinker","-rpath","-Xlinker","@loader_path","@/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.product/Objects.LinkFileList","-Xlinker","-rpath","-Xlinker","/Library/Developer/CommandLineTools/usr/lib/swift-6.2/macosx","-target","arm64-apple-macosx13.0","-Xlinker","-add_ast_path","-Xlinker","/Users/reem/postman/.build/arm64-apple-macosx/debug/Modules/PostmanClient.swiftmodule","-I","/Library/Developer/CommandLineTools/Library/Developer/Frameworks","-L","/Library/Developer/CommandLineTools/Library/Developer/Frameworks","-plugin-path","/Library/Developer/CommandLineTools/usr/lib/swift/host/plugins/testing","-sdk","/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk","-g"]
+
+  "C.PostmanClient-arm64-apple-macosx-debug.exe-entitlements":
+    tool: shell
+    inputs: ["/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient","/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient-entitlement.plist"]
+    outputs: ["<PostmanClient-arm64-apple-macosx-debug.exe-CodeSigning>"]
+    description: "Applying debug entitlements to ./.build/arm64-apple-macosx/debug/PostmanClient"
+    args: ["codesign","--force","--sign","-","--entitlements","/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient-entitlement.plist","/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient"]
+
+  "C.PostmanClient-arm64-apple-macosx-debug.module":
+    tool: shell
+    inputs: ["/Users/reem/postman/ContentView.swift","/Users/reem/postman/ContentViewViewModel.swift","/Users/reem/postman/PostmanClientApp.swift","/Users/reem/postman/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt","/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.build/sources"]
+    outputs: ["/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.build/ContentView.swift.o","/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.build/ContentViewViewModel.swift.o","/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.build/PostmanClientApp.swift.o","/Users/reem/postman/.build/arm64-apple-macosx/debug/Modules/PostmanClient.swiftmodule"]
+    description: "Compiling Swift Module 'PostmanClient' (3 sources)"
+    args: ["/Library/Developer/CommandLineTools/usr/bin/swiftc","-module-name","PostmanClient","-emit-dependencies","-emit-module","-emit-module-path","/Users/reem/postman/.build/arm64-apple-macosx/debug/Modules/PostmanClient.swiftmodule","-output-file-map","/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.build/output-file-map.json","-incremental","-c","@/Users/reem/postman/.build/arm64-apple-macosx/debug/PostmanClient.build/sources","-I","/Users/reem/postman/.build/arm64-apple-macosx/debug/Modules","-target","arm64-apple-macosx13.0","-incremental","-enable-batch-mode","-serialize-diagnostics","-index-store-path","/Users/reem/postman/.build/arm64-apple-macosx/debug/index/store","-Onone","-enable-testing","-j16","-DSWIFT_PACKAGE","-DDEBUG","-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE","-module-cache-path","/Users/reem/postman/.build/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-Xfrontend","-entry-point-function-name","-Xfrontend","PostmanClient_main","-swift-version","5","-I","/Library/Developer/CommandLineTools/Library/Developer/Frameworks","-L","/Library/Developer/CommandLineTools/Library/Developer/Frameworks","-plugin-path","/Library/Developer/CommandLineTools/usr/lib/swift/host/plugins/testing","-sdk","/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk","-g","-Xcc","-isysroot","-Xcc","/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk","-Xcc","-fPIC","-Xcc","-g","-package-name","postman"]
+
+  "PackageStructure":
+    tool: package-structure-tool
+    inputs: ["/Users/reem/postman/","/Users/reem/postman/Package.swift","/Users/reem/postman/Package.resolved"]
+    outputs: ["<PackageStructure>"]
+    description: "Planning build"
+    allow-missing-inputs: true
+

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(swift build *)",
+      "Bash(swift run *)",
+      "Bash(python3 *)",
+      "Bash(osascript *)",
+      "Bash(open .build/debug/PostmanClient.app)"
+    ]
+  }
+}
