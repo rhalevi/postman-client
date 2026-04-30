@@ -17,21 +17,54 @@ A minimal macOS Postman client built with SwiftUI and Swift Package Manager.
 - macOS 13+
 - Swift 5.9+
 
-## Getting Started
+## Building
 
 ```bash
 swift build
 ```
 
-To run the app, create an app bundle and launch it with `open`:
+## Running the App
+
+The project is a Swift Package Manager project (no Xcode). To build and run:
 
 ```bash
+# 1. Build
+swift build
+
+# 2. Create an app bundle (required for the app to launch correctly)
 mkdir -p PostmanClient.app/Contents/MacOS
 cp .build/debug/PostmanClient PostmanClient.app/Contents/MacOS/
+
+# 3. Add Info.plist (required for macOS to recognize it as an app)
+cat > PostmanClient.app/Contents/Info.plist << 'PLIST'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleExecutable</key>
+    <string>PostmanClient</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.postman.client</string>
+    <key>CFBundleName</key>
+    <string>PostmanClient</string>
+    <key>CFBundleVersion</key>
+    <string>1.0</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+</dict>
+</plist>
+PLIST
+
+# 4. Launch
 open PostmanClient.app
 ```
 
-Or use the included `Info.plist` in `PostmanClient.app/Contents/` if you've already created the bundle structure.
+Alternatively, run `./run.sh` for a quick one-command build + launch (if the script exists).
 
 ## Architecture
 
